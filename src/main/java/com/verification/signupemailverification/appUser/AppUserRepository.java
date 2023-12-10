@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 @Transactional(readOnly = true)
-public interface AppUserRepository extends JpaRepository<User, UUID> {
+public interface AppUserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 }
