@@ -1,6 +1,7 @@
 package com.verification.signupemailverification.appUser;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Data
+@Builder
 @EqualsAndHashCode
 @AllArgsConstructor
 @Entity
@@ -30,30 +32,26 @@ public class User implements UserDetails {
             generator = "student_sequence"
     )
     @Id
-    private UUID id;
-    private String name;
-    private String username;
+    private Long id;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked = false;
+    private Boolean enabled = false;
 
-    public User(String name,
-                String username,
+    public User(String firstName,
+                String lastName,
                 String email,
                 String password,
-                AppUserRole appUserRole,
-                Boolean locked,
-                Boolean enabled) {
-        this.name = name;
-        this.username = username;
+                AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 
     public User() {
@@ -73,7 +71,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return lastName;
     }
 
     @Override
